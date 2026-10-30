@@ -1,0 +1,1145 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi pequeño diario ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+:root {
+    --fondo: #faf7f2;
+    --blanco: #ffffff;
+    --lila: #c5b4e8;
+    --lila-oscuro: #8267b4;
+    --texto: #41394c;
+    --suave: #8e8599;
+    --borde: #eee7f3;
+    --verde: #dce9d9;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+}
+
+button, input, textarea, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.app {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+/* BARRA LATERAL */
+.sidebar {
+    background: #f0eafa;
+    padding: 32px 22px;
+    border-right: 1px solid #e9e0f2;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    background: white;
+    width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 15px;
+    font-size: 24px;
+}
+
+.logo h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+}
+
+.logo p {
+    color: var(--suave);
+    font-size: 12px;
+    margin-top: 3px;
+}
+
+.menu-title {
+    font-size: 11px;
+    color: #9588a6;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.menu {
+    display: grid;
+    gap: 8px;
+}
+
+.menu button {
+    background: transparent;
+    border: 0;
+    padding: 13px;
+    text-align: left;
+    border-radius: 12px;
+    color: #71657f;
+    transition: .2s;
+}
+
+.menu button:hover,
+.menu button.active {
+    background: white;
+    color: var(--lila-oscuro);
+}
+
+.sidebar-note {
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    margin-top: auto;
+    line-height: 1.7;
+    font-size: 13px;
+    color: #766a84;
+}
+
+.sidebar-note strong {
+    display: block;
+    color: var(--texto);
+    margin-bottom: 6px;
+}
+
+/* CONTENIDO */
+.main {
+    padding: 38px clamp(18px, 4vw, 55px);
+    max-width: 1450px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 32px;
+}
+
+.date-label {
+    color: var(--suave);
+    font-size: 13px;
+    margin-bottom: 7px;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+}
+
+.topbar h1 {
+    font-size: clamp(27px, 3vw, 38px);
+    font-weight: 600;
+}
+
+.topbar p {
+    margin-top: 8px;
+    color: var(--suave);
+    font-size: 14px;
+}
+
+.today-badge {
+    background: white;
+    border: 1px solid var(--borde);
+    padding: 12px 16px;
+    border-radius: 14px;
+    white-space: nowrap;
+    font-size: 13px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(240px, .9fr);
+    gap: 24px;
+    align-items: start;
+}
+
+.card {
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 5px 20px #4b326008;
+    margin-bottom: 22px;
+}
+
+.card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.card-heading h2 {
+    font-size: 23px;
+}
+
+.small-text {
+    color: var(--suave);
+    font-size: 12px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+
+.field {
+    margin-bottom: 19px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    background: #fdfcfe;
+    color: var(--texto);
+    outline: none;
+    transition: .2s;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--lila);
+    box-shadow: 0 0 0 3px #c5b4e822;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 110px;
+    line-height: 1.8;
+}
+
+#contenido {
+    min-height: 175px;
+}
+
+.moods {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.mood {
+    background: #fcfaff;
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 12px 3px;
+    color: var(--suave);
+    font-size: 12px;
+}
+
+.mood span {
+    display: block;
+    font-size: 23px;
+    margin-bottom: 6px;
+}
+
+.mood.selected {
+    border-color: var(--lila-oscuro);
+    background: #f2edfb;
+    color: var(--lila-oscuro);
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.btn {
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: 1px solid var(--borde);
+    background: white;
+    color: var(--texto);
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.btn-primary {
+    background: var(--lila-oscuro);
+    border-color: var(--lila-oscuro);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #70559f;
+}
+
+.btn:hover {
+    filter: brightness(.97);
+}
+
+.btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* COLUMNA DERECHA */
+.quote {
+    background: #eae3f7;
+    border: none;
+}
+
+.quote .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--lila-oscuro);
+}
+
+.quote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    line-height: 1.65;
+    margin: 5px 0 12px;
+}
+
+.quote small {
+    color: #827395;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.stat {
+    background: #faf7fd;
+    border: 1px solid var(--borde);
+    border-radius: 15px;
+    padding: 17px;
+}
+
+.stat span {
+    font-size: 12px;
+    color: var(--suave);
+}
+
+.stat strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    margin-top: 7px;
+}
+
+/* CALENDARIO */
+.calendar-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.calendar-nav h3 {
+    font-size: 18px;
+}
+
+.arrow {
+    border: 0;
+    background: #f5f0fb;
+    border-radius: 9px;
+    width: 32px;
+    height: 32px;
+    color: var(--lila-oscuro);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.weekday {
+    color: var(--suave);
+    font-size: 10px;
+    padding: 7px 0;
+}
+
+.day {
+    border: 0;
+    background: transparent;
+    border-radius: 9px;
+    min-height: 34px;
+    color: var(--texto);
+    position: relative;
+    font-size: 12px;
+}
+
+.day:hover {
+    background: #f3edfb;
+}
+
+.day.today {
+    background: #eee6fb;
+    color: var(--lila-oscuro);
+    font-weight: 700;
+}
+
+.day.has-entry::after {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background: #9c7bd0;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 3px;
+    left: calc(50% - 2px);
+}
+
+.day.selected-day {
+    background: var(--lila-oscuro);
+    color: white;
+}
+
+.day.selected-day::after {
+    background: white;
+}
+
+/* ENTRADAS */
+.entries-section {
+    margin-top: 10px;
+}
+
+.search {
+    margin-bottom: 15px;
+}
+
+.entry {
+    border: 1px solid var(--borde);
+    border-radius: 15px;
+    padding: 16px;
+    margin-bottom: 12px;
+    background: #fff;
+}
+
+.entry-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: start;
+}
+
+.entry h3 {
+    font-size: 18px;
+    margin: 8px 0;
+    overflow-wrap: anywhere;
+}
+
+.entry-date {
+    color: var(--suave);
+    font-size: 11px;
+}
+
+.entry-preview {
+    color: #7e7487;
+    line-height: 1.7;
+    font-size: 13px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin: 10px 0;
+}
+
+.entry-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mini-btn {
+    border: 1px solid var(--borde);
+    background: #fcfaff;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12px;
+    color: #76668f;
+}
+
+.empty {
+    text-align: center;
+    padding: 28px 12px;
+    color: var(--suave);
+    line-height: 1.8;
+}
+
+.empty span {
+    display: block;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    color: #a49aa9;
+    font-size: 11px;
+    padding: 20px 0 5px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#status {
+    font-size: 13px;
+    color: #557b58;
+    margin-top: 12px;
+    min-height: 18px;
+}
+
+/* CELULARES */
+@media (max-width: 950px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        padding: 18px;
+        gap: 15px;
+    }
+
+    .menu {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .menu button {
+        text-align: center;
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
+    .menu-title, .sidebar-note {
+        display: none;
+    }
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .main {
+        padding: 25px 16px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+
+    .today-badge {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 420px) {
+    .mood {
+        font-size: 10px;
+    }
+
+    .mood span {
+        font-size: 20px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    .topbar h1 {
+        font-size: 26px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="logo">
+            <div class="logo-icon">📔</div>
+            <div>
+                <h2>Mi diario</h2>
+                <p>Mi pequeño mundo ♡</p>
+            </div>
+        </div>
+
+        <div>
+            <div class="menu-title">MI ESPACIO</div>
+            <nav class="menu">
+                <button class="active" data-view="today">☀️ Hoy</button>
+                <button data-view="entries">📚 Mis recuerdos</button>
+                <button data-view="favorites">💜 Favoritos</button>
+            </nav>
+        </div>
+
+        <div class="sidebar-note">
+            <strong>🌷 Un recordatorio</strong>
+            No todos los días tienen que ser perfectos. Cada día tiene algo que vale la pena recordar.
+        </div>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <div class="date-label" id="longDate"></div>
+                <h1 id="pageTitle">Mi pequeño mundo ✨</h1>
+                <p id="pageSubtitle">Un espacio solo para ti, tus ideas y tus recuerdos.</p>
+            </div>
+            <div class="today-badge">🌸 Tu espacio seguro</div>
+        </header>
+
+        <div class="layout">
+            <div>
+                <!-- FORMULARIO DEL DIARIO -->
+                <section class="card" id="editor">
+                    <div class="card-heading">
+                        <h2 id="formTitle">¿Cómo estuvo tu día?</h2>
+                        <span>🖊️</span>
+                    </div>
+
+                    <form id="diaryForm">
+                        <div class="field">
+                            <label for="fecha">Fecha de tu entrada</label>
+                            <input type="date" id="fecha" required>
+                        </div>
+
+                        <div class="field">
+                            <label for="titulo">Ponle un título a tu día</label>
+                            <input type="text" id="titulo"
+                                placeholder="Ej. Un día para recordar..." maxlength="100" required>
+                        </div>
+
+                        <div class="field">
+                            <label>¿Cómo te sentiste hoy?</label>
+                            <div class="moods">
+                                <button type="button" class="mood selected" data-mood="😊">
+                                    <span>😊</span>Feliz
+                                </button>
+                                <button type="button" class="mood" data-mood="😌">
+                                    <span>😌</span>En paz
+                                </button>
+                                <button type="button" class="mood" data-mood="🥰">
+                                    <span>🥰</span>Amado
+                                </button>
+                                <button type="button" class="mood" data-mood="😔">
+                                    <span>😔</span>Triste
+                                </button>
+                                <button type="button" class="mood" data-mood="😵‍💫">
+                                    <span>😵‍💫</span>Confuso
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label for="contenido">Cuéntame sobre tu día 💭</label>
+                            <textarea id="contenido"
+                                placeholder="Hoy me desperté y...&#10;&#10;Después fui a...&#10;&#10;Me sentí feliz porque..."></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="agradecimiento">Algo bonito que agradezco hoy 🌷</label>
+                            <textarea id="agradecimiento" rows="2"
+                                placeholder="Agradezco por..."></textarea>
+                        </div>
+
+                        <div class="field">
+                            <label for="recuerdo">Algo que quiero recordar</label>
+                            <input id="recuerdo" type="text" maxlength="250"
+                                placeholder="Un momento especial, una persona, una canción...">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary" id="saveButton">
+                                ♡ Guardar mi día
+                            </button>
+                            <button type="button" class="btn" id="newButton">
+                                Nueva entrada
+                            </button>
+                        </div>
+
+                        <p id="status" role="status" aria-live="polite"></p>
+                    </form>
+                </section>
+
+                <!-- LISTA DE RECUERDOS -->
+                <section class="card entries-section" id="entriesSection">
+                    <div class="card-heading">
+                        <h2 id="entriesTitle">Mis recuerdos 📚</h2>
+                        <span class="small-text" id="entryCount">0 entradas</span>
+                    </div>
+
+                    <input class="search" id="search" type="search"
+                        placeholder="🔎 Buscar un recuerdo o una fecha...">
+
+                    <div id="entriesList"></div>
+                </section>
+            </div>
+
+            <aside>
+                <section class="card quote">
+                    <div class="quote-mark">“</div>
+                    <p>Tu vida está hecha de pequeños momentos que merecen ser recordados.</p>
+                    <small>Una nota para ti ♡</small>
+                </section>
+
+                <section class="card">
+                    <div class="card-heading">
+                        <h2>Mis días</h2>
+                        <span>🗓️</span>
+                    </div>
+
+                    <div class="calendar-nav">
+                        <button class="arrow" id="prevMonth" aria-label="Mes anterior">‹</button>
+                        <h3 id="monthLabel"></h3>
+                        <button class="arrow" id="nextMonth" aria-label="Mes siguiente">›</button>
+                    </div>
+
+                    <div class="calendar-grid" id="calendar"></div>
+                    <p class="small-text" style="margin-top:14px">
+                        💜 Los puntitos indican días con recuerdos.
+                    </p>
+                </section>
+
+                <section class="card">
+                    <div class="card-heading">
+                        <h2>Mi progreso</h2>
+                        <span>🌱</span>
+                    </div>
+                    <div class="stats">
+                        <div class="stat">
+                            <span>Días escritos</span>
+                            <strong id="totalStat">0</strong>
+                        </div>
+                        <div class="stat">
+                            <span>Favoritos</span>
+                            <strong id="favoriteStat">0</strong>
+                        </div>
+                    </div>
+                </section>
+            </aside>
+        </div>
+
+        <footer>Hecho con cariño para ti · Cada día cuenta ♡</footer>
+    </main>
+</div>
+
+<script>
+const $ = selector => document.querySelector(selector);
+const $$ = selector => document.querySelectorAll(selector);
+
+const STORAGE_KEY = "mi_pequeno_diario_v1";
+
+function localDate(date = new Date()) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}
+
+function readEntries() {
+    try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return Array.isArray(data) ? data : [];
+    } catch {
+        return [];
+    }
+}
+
+let entries = readEntries();
+let editingId = null;
+let selectedMood = "😊";
+let currentView = "today";
+let calendarDate = new Date();
+let selectedDate = localDate();
+
+const today = localDate();
+
+$("#longDate").textContent = new Date().toLocaleDateString("es-PE", {
+    weekday: "long", day: "numeric", month: "long", year: "numeric"
+});
+
+$("#fecha").value = today;
+
+function saveToStorage() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+        return true;
+    } catch (error) {
+        alert("No se pudo guardar. Revisa el espacio disponible del navegador.");
+        return false;
+    }
+}
+
+function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+function formatDate(date) {
+    if (!date) return "";
+    const [y, m, d] = date.split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString("es-PE", {
+        day: "numeric", month: "long", year: "numeric"
+    });
+}
+
+function selectMood(mood) {
+    selectedMood = mood;
+    $$(".mood").forEach(button => {
+        button.classList.toggle("selected", button.dataset.mood === mood);
+    });
+}
+
+$$(".mood").forEach(button => {
+    button.addEventListener("click", () => selectMood(button.dataset.mood));
+});
+
+function resetForm(date = today) {
+    editingId = null;
+    $("#diaryForm").reset();
+    $("#fecha").value = date;
+    $("#formTitle").textContent = "¿Cómo estuvo tu día?";
+    $("#saveButton").textContent = "♡ Guardar mi día";
+    $("#status").textContent = "";
+    selectMood("😊");
+}
+
+$("#newButton").addEventListener("click", () => {
+    resetForm(selectedDate || today);
+    $("#titulo").focus();
+});
+
+$("#diaryForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const date = $("#fecha").value;
+    const title = $("#titulo").value.trim();
+    const content = $("#contenido").value.trim();
+    const gratitude = $("#agradecimiento").value.trim();
+    const memory = $("#recuerdo").value.trim();
+
+    if (!date || !title) {
+        $("#status").textContent = "Completa la fecha y el título.";
+        return;
+    }
+
+    const duplicate = entries.find(entry =>
+        entry.date === date && entry.id !== editingId
+    );
+
+    if (duplicate) {
+        const replace = confirm(
+            "Ya existe una entrada para esta fecha. ¿Quieres reemplazarla?"
+        );
+        if (!replace) return;
+        entries = entries.filter(entry => entry.id !== duplicate.id);
+    }
+
+    const entry = {
+        id: editingId || (
+            window.crypto && crypto.randomUUID
+                ? crypto.randomUUID()
+                : String(Date.now()) + Math.random()
+        ),
+        date,
+        title,
+        content,
+        gratitude,
+        memory,
+        mood: selectedMood,
+        favorite: editingId
+            ? Boolean(entries.find(item => item.id === editingId)?.favorite)
+            : false,
+        updatedAt: new Date().toISOString()
+    };
+
+    if (editingId) {
+        entries = entries.map(item => item.id === editingId ? entry : item);
+    } else {
+        entries.push(entry);
+    }
+
+    if (!saveToStorage()) return;
+
+    selectedDate = date;
+    calendarDate = new Date(
+        Number(date.slice(0, 4)),
+        Number(date.slice(5, 7)) - 1,
+        1
+    );
+
+    $("#status").textContent = "Tu recuerdo quedó guardado ♡";
+    resetForm(date);
+    renderAll();
+});
+
+function editEntry(id) {
+    const entry = entries.find(item => item.id === id);
+    if (!entry) return;
+
+    editingId = id;
+    $("#fecha").value = entry.date;
+    $("#titulo").value = entry.title;
+    $("#contenido").value = entry.content || "";
+    $("#agradecimiento").value = entry.gratitude || "";
+    $("#recuerdo").value = entry.memory || "";
+    $("#formTitle").textContent = "Editar mi recuerdo ✏️";
+    $("#saveButton").textContent = "Guardar cambios";
+    selectMood(entry.mood || "😊");
+
+    $("#editor").scrollIntoView({ behavior: "smooth" });
+}
+
+function deleteEntry(id) {
+    const entry = entries.find(item => item.id === id);
+    if (!entry) return;
+
+    if (!confirm(`¿Quieres eliminar "${entry.title}"? Esta acción no se puede deshacer.`)) {
+        return;
+    }
+
+    entries = entries.filter(item => item.id !== id);
+    if (!saveToStorage()) return;
+
+    if (editingId === id) resetForm();
+    renderAll();
+}
+
+function toggleFavorite(id) {
+    entries = entries.map(item =>
+        item.id === id ? { ...item, favorite: !item.favorite } : item
+    );
+
+    if (!saveToStorage()) return;
+    renderAll();
+}
+
+function renderEntries() {
+    const search = $("#search").value.toLowerCase().trim();
+
+    let filtered = [...entries].sort((a, b) =>
+        b.date.localeCompare(a.date)
+    );
+
+    if (currentView === "favorites") {
+        filtered = filtered.filter(item => item.favorite);
+    } else if (currentView === "today") {
+        filtered = filtered.filter(item => item.date === selectedDate);
+    }
+
+    if (search) {
+        filtered = filtered.filter(item =>
+            [item.title, item.content, item.gratitude, item.memory, item.date]
+                .join(" ").toLowerCase().includes(search)
+        );
+    }
+
+    $("#entryCount").textContent =
+        `${filtered.length} ${filtered.length === 1 ? "entrada" : "entradas"}`;
+
+    if (currentView === "today") {
+        $("#entriesTitle").textContent =
+            selectedDate === today ? "Lo que viví hoy ☀️" : "Recuerdo de este día 📖";
+    } else if (currentView === "favorites") {
+        $("#entriesTitle").textContent = "Mis favoritos 💜";
+    } else {
+        $("#entriesTitle").textContent = "Todos mis recuerdos 📚";
+    }
+
+    if (filtered.length === 0) {
+        $("#entriesList").innerHTML = `
+            <div class="empty">
+                <span>🌷</span>
+                <strong>Aún no hay recuerdos aquí</strong>
+                <p>Escribe sobre tu día y guarda este pequeño momento.</p>
+            </div>`;
+        return;
+    }
+
+    $("#entriesList").innerHTML = filtered.map(entry => {
+        const details = [
+            entry.content,
+            entry.gratitude ? "🌷 Agradezco: " + entry.gratitude : "",
+            entry.memory ? "✨ Quiero recordar: " + entry.memory : ""
+        ].filter(Boolean).join("\n\n");
+
+        return `
+        <article class="entry">
+            <div class="entry-top">
+                <div>
+                    <div class="entry-date">${escapeHTML(formatDate(entry.date))}</div>
+                    <h3>${escapeHTML(entry.title)}</h3>
+                </div>
+                <span style="font-size:25px">${escapeHTML(entry.mood || "😊")}</span>
+            </div>
+
+            <div class="entry-preview">${escapeHTML(details || "Un día que decidiste guardar en tu diario.")}</div>
+
+            <div class="entry-actions">
+                <button class="mini-btn" data-action="favorite" data-id="${escapeHTML(entry.id)}">
+                    ${entry.favorite ? "💜 Favorito" : "♡ Favorito"}
+                </button>
+                <button class="mini-btn" data-action="edit" data-id="${escapeHTML(entry.id)}">
+                    ✏️ Editar
+                </button>
+                <button class="mini-btn" data-action="delete" data-id="${escapeHTML(entry.id)}">
+                    🗑️ Eliminar
+                </button>
+            </div>
+        </article>`;
+    }).join("");
+}
+
+$("#entriesList").addEventListener("click", event => {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+
+    const id = button.dataset.id;
+
+    if (button.dataset.action === "edit") editEntry(id);
+    if (button.dataset.action === "delete") deleteEntry(id);
+    if (button.dataset.action === "favorite") toggleFavorite(id);
+});
+
+$("#search").addEventListener("input", renderEntries);
+
+function renderCalendar() {
+    const year = calendarDate.getFullYear();
+    const month = calendarDate.getMonth();
+
+    $("#monthLabel").textContent = calendarDate.toLocaleDateString("es-PE", {
+        month: "long", year: "numeric"
+    });
+
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const weekdays = ["D", "L", "M", "X", "J", "V", "S"];
+    let html = weekdays.map(day =>
+        `<div class="weekday">${day}</div>`
+    ).join("");
+
+    for (let i = 0; i < firstDay; i++) {
+        html += `<div></div>`;
+    }
+
+    for (let day = 1; day <= daysInMonth; day++) {
+        const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+        const hasEntry = entries.some(entry => entry.date === date);
+        const isToday = date === today;
+        const isSelected = date === selectedDate;
+
+        html += `
+            <button class="day ${hasEntry ? "has-entry" : ""} ${isToday ? "today" : ""} ${isSelected ? "selected-day" : ""}"
+                data-date="${date}" aria-label="${day} ${calendarDate.toLocaleDateString("es-PE", {month:"long"})}">
+                ${day}
+            </button>`;
+    }
+
+    $("#calendar").innerHTML = html;
+}
+
+$("#calendar").addEventListener("click", event => {
+    const button = event.target.closest("button[data-date]");
+    if (!button) return;
+
+    selectedDate = button.dataset.date;
+    resetForm(selectedDate);
+    currentView = "today";
+    updateMenu();
+    renderAll();
+});
+
+$("#prevMonth").addEventListener("click", () => {
+    calendarDate = new Date(
+        calendarDate.getFullYear(), calendarDate.getMonth() - 1, 1
+    );
+    renderCalendar();
+});
+
+$("#nextMonth").addEventListener("click", () => {
+    calendarDate = new Date(
+        calendarDate.getFullYear(), calendarDate.getMonth() + 1, 1
+    );
+    renderCalendar();
+});
+
+function updateMenu() {
+    $$("[data-view]").forEach(button => {
+        button.classList.toggle("active", button.dataset.view === currentView);
+    });
+
+    const titles = {
+        today: ["Mi pequeño mundo ✨", "Un espacio solo para ti, tus ideas y tus recuerdos."],
+        entries: ["Mi historia, día a día 📚", "Todos esos momentos que forman parte de ti."],
+        favorites: ["Mis momentos favoritos 💜", "Los recuerdos que guardo más cerca del corazón."]
+    };
+
+    $("#pageTitle").textContent = titles[currentView][0];
+    $("#pageSubtitle").textContent = titles[currentView][1];
+
+    $("#editor").classList.toggle("hidden", currentView !== "today");
+}
+
+$$("[data-view]").forEach(button => {
+    button.addEventListener("click", () => {
+        currentView = button.dataset.view;
+        $("#search").value = "";
+        updateMenu();
+        renderAll();
+
+        if (currentView !== "today") {
+            $("#entriesSection").scrollIntoView({ behavior: "smooth" });
+        }
+    });
+});
+
+function renderAll() {
+    renderEntries();
+    renderCalendar();
+
+    $("#totalStat").textContent = entries.length;
+    $("#favoriteStat").textContent =
+        entries.filter(item => item.favorite).length;
+}
+
+renderAll();
+</script>
+</body>
+</html>
